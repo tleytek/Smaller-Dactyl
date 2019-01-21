@@ -393,8 +393,10 @@
                                  (->> (cube 16 3.5 web-thickness)
                                       (translate [0.5 12 (- plate-thickness (/ web-thickness 2) 1.4)])
                                       (color [1 0 0 1/2])))
-        top-plate (difference top-plate stabilizer-cutout)]
-    (union top-plate (mirror [0 1 0] top-plate))))
+        top-plate (difference top-plate stabilizer-cutout)
+        ]
+    (union top-plate (mirror [0 1 0] top-plate))
+    ))
 
 (def thumb-post-tr (translate [(- (/ mount-width 2) post-adj)  (- (/ mount-height  2) post-adj) 0] web-post))
 (def thumb-post-tl (translate [(+ (/ mount-width -2) post-adj) (- (/ mount-height  2) post-adj) 0] web-post))
@@ -403,20 +405,6 @@
 
 (def thumb-connectors
   (union
-  ;  (apply union
-  ;         (concat
-  ;          (for [column [2] row [1]]
-  ;            (triangle-hulls (thumb-place column row web-post-br)
-  ;                            (thumb-place column row web-post-tr)
-  ;                            (thumb-place (dec column) row web-post-bl)
-  ;                            (thumb-place (dec column) row web-post-tl))
-  ;                            )
-  ;          (for [column [2] row [0 1]]
-  ;            (triangle-hulls
-  ;             (thumb-place column row web-post-bl)
-  ;             (thumb-place column row web-post-br)
-  ;             (thumb-place column (dec row) web-post-tl)
-  ;             (thumb-place column (dec row) web-post-tr)))))
    (let [plate-height (/ (- sa-double-length mount-height) 2)
          thumb-tl (->> web-post-tl
                        (translate [0 plate-height 0]))
@@ -446,43 +434,35 @@
                       (thumb-place 1 1 web-post-br)
                       (thumb-place 1 1 web-post-bl))
 
-      ;;Connecting the 4 with the double in the bottom left
-      ; (triangle-hulls (thumb-place 1 1 web-post-bl)
-      ;                 (thumb-place 1 -1/2 thumb-tl)
-      ;                 (thumb-place 2 1 web-post-br)
-      ;                 (thumb-place 2 0 web-post-tr))
-
-      ;;Connecting the two singles with the middle double
-      ; (hull (thumb-place 1 -1/2 thumb-tl)
-      ;       (thumb-place 1 -1/2 thumb-bl)
-      ;       (thumb-place 2 0 web-post-br)
-      ;       (thumb-place 2 -1 web-post-tr))
-      ; (hull (thumb-place 1 -1/2 thumb-tl)
-      ;       (thumb-place 2 0 web-post-tr)
-      ;       (thumb-place 2 0 web-post-br))
-      ; (hull (thumb-place 1 -1/2 thumb-bl)
-      ;       (thumb-place 2 -1 web-post-tr)
-      ;       (thumb-place 2 -1 web-post-br))
-
       ;;Connecting the thumb to everything
+      (triangle-hulls 
+                      (thumb-place -1 -1/2 web-post-br)
+                      (key-place 4 cornerrow web-post-bl)
+                      (thumb-place -1 -1/2 web-post-tr)
+                      (key-place 3 cornerrow web-post-br)
+                      (thumb-place -1 -1/2 web-post-tr)
+                      (key-place 3 cornerrow web-post-bl)
+                      (thumb-place -1 -1/2 web-post-tr)
+                      (key-place 2 cornerrow web-post-br)
+                      (thumb-place -1 -1/2 web-post-tr)
+                      (key-place 2 cornerrow web-post-bl)
+                      (thumb-place -1 -1/2 web-post-tr)
+                      (key-place 1 cornerrow web-post-br)
+                      (thumb-place -1 -1/2 web-post-tr)
+                      (key-place 1 cornerrow web-post-bl)
+                      (thumb-place -1 -1/2 web-post-tl)
+                      (key-place 0 cornerrow web-post-br)
+                      (thumb-place 0 -1/2 thumb-tr)
+                      (key-place 0 cornerrow web-post-bl)
+                      (thumb-place 0 -1/2 thumb-tl)
+                      (thumb-place 1 -1/2 thumb-tr))
       (triangle-hulls 
                       (key-place 0 1 web-post-bl)
                       (thumb-place 1 1 web-post-tr)
                       (key-place 0 2 web-post-tl)
                       (thumb-place 1 1 web-post-br)
                       (key-place 0 2 web-post-bl)
-                      (thumb-place 1 -1/2 thumb-tr))
-      (triangle-hulls 
-                      (thumb-place 1 -1/2 thumb-tr)
-                      (key-place 0 2 web-post-bl)
-                      (thumb-place 0 -1/2 thumb-tl)
-                      (key-place 0 2 web-post-br)
-                      (thumb-place 0 -1/2 thumb-tr)
-                      (key-place 1 2 web-post-bl)
-                      (thumb-place -1 -1/2 web-post-tl)
-                      (key-place 1 2 web-post-br)
-                      (thumb-place -1 -1/2 web-post-tr)
-                      (key-place 2 2 web-post-bl))))))
+                      (thumb-place 1 -1/2 thumb-tr))))))
 
 (def thumb
   (union
@@ -580,9 +560,8 @@
    (wall-brace (partial key-place 0 1) -1 1 web-post-bl thumb-2-1x-top -1 1 web-post-tr)
 
    ; front wall
-   (for [x (range 3 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl x       cornerrow 0 -1 web-post-br)) ; TODO fix extra wall
-   (for [x (range 3 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
-   (key-wall-brace 2 cornerrow 0 -1 web-post-br 2 cornerrow 1 -1 web-post-bl)
+   (key-wall-brace 4 cornerrow 0 -1 web-post-bl 4 cornerrow 0 -1 web-post-br)
+      (wall-brace thumb-0-2x 0 -1 web-post-br (partial key-place 4 cornerrow) 0 -1 web-post-bl)
 
    ; thumb walls
   ;  (wall-brace thumb-3-1x-bottom   0 -1 web-post-bl thumb-3-1x-bottom   0 -1 web-post-br)
@@ -597,15 +576,12 @@
    (wall-brace thumb-2-1x-top -1 0 web-post-tl thumb-2-1x-top -1 0 web-post-bl)
    (wall-brace thumb-2-1x-top -1 1 web-post-tr thumb-2-1x-top 0 1 web-post-tl)
    (wall-brace thumb-0-2x          0 -1 web-post-bl thumb-0-2x          0 -1 web-post-br)
-   (wall-brace thumb-0-2x          1  0 web-post-br thumb-0-2x          1  0 web-post-tr)
-   (wall-brace thumb-0-2x          1  0 web-post-tr (partial key-place 2 2) 1 -1 web-post-bl)
 
    ; thumb corners
   ;  (wall-brace thumb-3-1x-bottom  -1  0 web-post-bl thumb-3-1x-bottom  0 -1 web-post-bl)
   ;  (wall-brace thumb-3-1x-top -1 0 web-post-tl thumb-3-1x-top 0 1 web-post-tl)
    
    (wall-brace thumb-2-1x-top -1 0 web-post-tl thumb-2-1x-top 0 1 web-post-tl)
-   (wall-brace thumb-0-2x 0 -1 web-post-br thumb-0-2x 1 0 web-post-br)
    (wall-brace (partial key-place 0 0) 0 1 web-post-tl (partial key-place 0 0) -1 0 web-post-tl)
     ))
 
@@ -738,15 +714,17 @@
                    thumb
                    thumb-connectors
                    (difference (union case-walls
-                                      screw-insert-outers
+                                      ; screw-insert-outers
                                       ; pro-micro-holder
-                                      usb-holder-holder
-                                      trrs-holder)
-                               usb-holder-space
-                               usb-holder-space2
-                               usb-jack
-                               trrs-holder-hole
-                               screw-insert-holes))
+                                      ;usb-holder-holder
+                                      ;trrs-holder
+                                      )
+                              ;  usb-holder-space
+                              ;  usb-holder-space2
+                              ;  usb-jack
+                              ;  trrs-holder-hole
+                               ; screw-insert-holes
+                               ))
                   (translate [0 0 -20] (cube 350 350 40))))
 
 (spit "things/right.scad"
