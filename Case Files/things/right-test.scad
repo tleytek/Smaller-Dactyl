@@ -9562,41 +9562,11 @@ difference () {
                       rotate (a=-7.499999999999999, v=[1, 0, 0]) {
                         translate ([0, 0, -86.41780793741755]) {
                           union () {
-                            difference () {
-                              translate ([0, 13.675, 2]) {
-                                cube ([17.2, 10.15, 4], center=true);
-                              }
-                              union () {
-                                color ([1, 0, 0, 1/2]) {
-                                  translate ([0.5, 12, 2]) {
-                                    cube ([14.2, 3.5, 4], center=true);
-                                  }
-                                }
-                                color ([1, 0, 0, 1/2]) {
-                                  translate ([0.5, 12, 0.6000000000000001]) {
-                                    cube ([16, 3.5, 4], center=true);
-                                  }
-                                }
-                              }
+                            translate ([0, 13.675, 2]) {
+                              cube ([17.2, 10.15, 4], center=true);
                             }
-                            mirror ([0, 1, 0]) {
-                              difference () {
-                                translate ([0, 13.675, 2]) {
-                                  cube ([17.2, 10.15, 4], center=true);
-                                }
-                                union () {
-                                  color ([1, 0, 0, 1/2]) {
-                                    translate ([0.5, 12, 2]) {
-                                      cube ([14.2, 3.5, 4], center=true);
-                                    }
-                                  }
-                                  color ([1, 0, 0, 1/2]) {
-                                    translate ([0.5, 12, 0.6000000000000001]) {
-                                      cube ([16, 3.5, 4], center=true);
-                                    }
-                                  }
-                                }
-                              }
+                            translate ([0, -13.675, 2]) {
+                              cube ([17.2, 10.15, 4], center=true);
                             }
                           }
                         }
@@ -9620,41 +9590,11 @@ difference () {
                       rotate (a=-7.499999999999999, v=[1, 0, 0]) {
                         translate ([0, 0, -86.41780793741755]) {
                           union () {
-                            difference () {
-                              translate ([0, 13.675, 2]) {
-                                cube ([17.2, 10.15, 4], center=true);
-                              }
-                              union () {
-                                color ([1, 0, 0, 1/2]) {
-                                  translate ([0.5, 12, 2]) {
-                                    cube ([14.2, 3.5, 4], center=true);
-                                  }
-                                }
-                                color ([1, 0, 0, 1/2]) {
-                                  translate ([0.5, 12, 0.6000000000000001]) {
-                                    cube ([16, 3.5, 4], center=true);
-                                  }
-                                }
-                              }
+                            translate ([0, 13.675, 2]) {
+                              cube ([17.2, 10.15, 4], center=true);
                             }
-                            mirror ([0, 1, 0]) {
-                              difference () {
-                                translate ([0, 13.675, 2]) {
-                                  cube ([17.2, 10.15, 4], center=true);
-                                }
-                                union () {
-                                  color ([1, 0, 0, 1/2]) {
-                                    translate ([0.5, 12, 2]) {
-                                      cube ([14.2, 3.5, 4], center=true);
-                                    }
-                                  }
-                                  color ([1, 0, 0, 1/2]) {
-                                    translate ([0.5, 12, 0.6000000000000001]) {
-                                      cube ([16, 3.5, 4], center=true);
-                                    }
-                                  }
-                                }
-                              }
+                            translate ([0, -13.675, 2]) {
+                              cube ([17.2, 10.15, 4], center=true);
                             }
                           }
                         }
