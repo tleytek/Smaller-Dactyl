@@ -26,19 +26,6 @@ So I built a dactyl manuform and dactyl-manuform mini before I built a Dactyl. T
 
 If you'd like to challenge yourself and make one of these then head over to the [Case Files](https://github.com/tleytek/Smaller-Dactyl/tree/master/Case%20Files)
 
-## Getting the case and bottom plate
-
-### Option 1: Generate OpenSCAD and STL models
-
-- Navigate to the dactyl-keyboard folder in CMD
-- Run `lein generate` or `lein auto generate`
-- This will regenerate the `things/*.scad` files
-- Use OpenSCAD to open a `.scad` file.
-- Make changes to design, repeat `load-file`, OpenSCAD will watch for changes and rerender.
-- When done, use OpenSCAD to export STL files
-
-### Option 2: Download from Thingiverse
-
 ## License
 
 Copyright © 2015-2018 Matthew Adereth, Tom Short and Leo Lou
