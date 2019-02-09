@@ -22,6 +22,10 @@ So I built a dactyl manuform and dactyl-manuform mini before I built a Dactyl. T
 - Screw posts are moved inside. The holes are designed for TRISERT® thread inserts 145m3.
 - The pro micro holder has been modified. Dupont cables can be used.
 
+## Getting Started
+
+If you'd like to challenge yourself and make one of these then head over to the [Case Files](https://github.com/tleytek/Smaller-Dactyl/tree/master/Case%20Files)
+
 ## Getting the case and bottom plate
 
 ### Option 1: Generate OpenSCAD and STL models
