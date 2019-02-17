@@ -13,7 +13,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (def nrows 4)
-(def ncols 5)
+(def ncols 6)
 
 (def α (/ π 12))                        ; curvature of the columns
 (def β (/ π 36))                        ; curvature of the rows
@@ -67,8 +67,8 @@
 ;; Switch Hole ;;
 ;;;;;;;;;;;;;;;;;
 
-(def keyswitch-height 14.2) ;; Was 14.1, then 14.25
-(def keyswitch-width 14.2)
+(def keyswitch-height 14.25) ;; Was 14.1, then 14.25
+(def keyswitch-width 14.25)
 
 (def sa-profile-key-height 12.7)
 
@@ -371,7 +371,7 @@
     (thumb-0-2x shape)
     (thumb-1-2x shape)
     (thumb-2-2x-bottom shape)
-    (thumb-2-1x-top shape)
+    ; (thumb-2-1x-top shape)
     ; (thumb-3-1x-top shape)
     ; (thumb-3-1x-center shape)
     ; (thumb-3-1x-bottom shape)
@@ -388,19 +388,14 @@
         top-plate (->> (cube mount-width plate-height web-thickness)
                        (translate [0 (/ (+ plate-height mount-height) 2)
                                    (- plate-thickness (/ web-thickness 2))]))
-        bottom-plate (->> (cube mount-width plate-height web-thickness)
-                       (translate [0 (/ (+ plate-height mount-height) -2)
-                                   (- plate-thickness (/ web-thickness 2))]))
-        ; stabilizer-cutout (union (->> (cube 14.2 3.5 web-thickness)
-        ;                               (translate [0.5 12 (- plate-thickness (/ web-thickness 2))])
-        ;                               (color [1 0 0 1/2]))
-        ;                          (->> (cube 16 3.5 web-thickness)
-        ;                               (translate [0.5 12 (- plate-thickness (/ web-thickness 2) 4)])
-        ;                               (color [1 0 0 1/2])))
-        ; top-plate (difference top-plate)
-        ]
-    (union top-plate bottom-plate)
-    ))
+        stabilizer-cutout (union (->> (cube 14.2 3.5 web-thickness)
+                                      (translate [0.5 12 (- plate-thickness (/ web-thickness 2))])
+                                      (color [1 0 0 1/2]))
+                                 (->> (cube 16 3.5 web-thickness)
+                                      (translate [0.5 12 (- plate-thickness (/ web-thickness 2) 4)])
+                                      (color [1 0 0 1/2])))
+        top-plate (difference top-plate stabilizer-cutout)]
+    (union top-plate (mirror [0 1 0] top-plate))))
 
 
 (def thumb-connectors
@@ -429,10 +424,10 @@
                       (thumb-place 1 -1/2 thumb-br))
 
       ;;Connecting the double to the one above it
-      (triangle-hulls (thumb-place 1 -1/2 thumb-tr)
-                      (thumb-place 1 -1/2 thumb-tl)
-                      (thumb-place 1 1 web-post-br)
-                      (thumb-place 1 1 web-post-bl))
+      ; (triangle-hulls (thumb-place 1 -1/2 thumb-tr)
+      ;                 (thumb-place 1 -1/2 thumb-tl)
+      ;                 (thumb-place 1 1 web-post-br)
+      ;                 (thumb-place 1 1 web-post-bl))
 
       ;;Connecting the thumb to everything
       (triangle-hulls 
@@ -456,13 +451,14 @@
                       (key-place 0 cornerrow web-post-bl)
                       (thumb-place 0 -1/2 thumb-tl)
                       (thumb-place 1 -1/2 thumb-tr))
-      (triangle-hulls 
-                      (key-place 0 1 web-post-bl)
-                      (thumb-place 1 1 web-post-tr)
-                      (key-place 0 2 web-post-tl)
-                      (thumb-place 1 1 web-post-br)
-                      (key-place 0 2 web-post-bl)
-                      (thumb-place 1 -1/2 thumb-tr))))))
+      ; (triangle-hulls 
+      ;                 (key-place 0 1 web-post-bl)
+      ;                 (thumb-place 1 1 web-post-tr)
+      ;                 (key-place 0 2 web-post-tl)
+      ;                 (thumb-place 1 1 web-post-br)
+      ;                 ; (key-place 0 2 web-post-bl)
+      ;                 (thumb-place 1 -1/2 thumb-tr))
+                      ))))
 
 (def thumb
   (union
@@ -523,7 +519,8 @@
     (union (key-wall-brace lastcol 0 0 1 tr lastcol 0 1 0 tr)
            (for [y (range 0 lastrow)] (key-wall-brace lastcol y 1 0 tr lastcol y 1 0 br))
            (for [y (range 1 lastrow)] (key-wall-brace lastcol (dec y) 1 0 br lastcol y 1 0 tr))
-           (key-wall-brace lastcol cornerrow 0 -1 br lastcol cornerrow 1 0 br))))
+           (key-wall-brace lastcol cornerrow 0 -1 br lastcol cornerrow 1 0 br)
+           )))
 
 (def case-walls
   (union
@@ -542,11 +539,14 @@
   (union 
   (wall-brace thumb-2-2x-bottom   -1 0 thumb-bl thumb-2-2x-bottom   0 -1 thumb-bl)
     (wall-brace thumb-2-2x-bottom   -1 0 thumb-tl thumb-2-2x-bottom   -1 0 thumb-bl)
-    (wall-brace thumb-2-1x-top   -1 0 web-post-bl thumb-2-2x-bottom   -1 0 thumb-tl)
+    ; (wall-brace thumb-2-1x-top   -1 0 web-post-bl thumb-2-2x-bottom   -1 0 thumb-tl)
     (wall-brace thumb-2-2x-bottom   0 -1 thumb-bl thumb-2-2x-bottom   0 -1 thumb-br)
     (wall-brace thumb-2-2x-bottom   0 -1 thumb-br thumb-1-2x  0 -1 thumb-bl)
     (wall-brace thumb-1-2x          0 -1 thumb-bl thumb-1-2x  0 -1 thumb-br)
     (wall-brace thumb-1-2x          0 -1 thumb-br thumb-0-2x  0 -1 web-post-bl)
+    (wall-brace thumb-2-2x-bottom   -1 0 thumb-tl thumb-2-2x-bottom 0 1 thumb-tl)
+    (wall-brace thumb-2-2x-bottom    0 1 thumb-tl thumb-2-2x-bottom -0.5 1 thumb-tr)
+    (wall-brace thumb-2-2x-bottom -0.5 1 thumb-tr (partial key-place 0 cornerrow) -1 1 web-post-bl)
     ))
 
    ; back wall
@@ -554,13 +554,15 @@
    (for [x (range 1 ncols)] (key-wall-brace x 0 0 1 web-post-tl (dec x) 0 0 1 web-post-tr))
 
    ; left wall                             
-   (wall-brace (partial key-place 0 0)       -1 0 web-post-tl (partial key-place 0 0) -1 0 web-post-bl)
+   (wall-brace (partial key-place 0 0) -1 0 web-post-tl (partial key-place 0 0) -1 0 web-post-bl)
    (wall-brace (partial key-place 0 0) -1 0 web-post-bl (partial key-place 0 1) -1 0 web-post-tl)
-   (wall-brace (partial key-place 0 1) -1 0 web-post-tl (partial key-place 0 1) -1 1 web-post-bl)
-   (wall-brace (partial key-place 0 1) -1 1 web-post-bl thumb-2-1x-top -1 1 web-post-tr)
-
+   (wall-brace (partial key-place 0 1) -1 0 web-post-tl (partial key-place 0 1) -1 0 web-post-bl)
+   (wall-brace (partial key-place 0 1) -1 0 web-post-bl (partial key-place 0 2) -1 0 web-post-tl)
+   (wall-brace (partial key-place 0 2) -1 0 web-post-tl (partial key-place 0 2) -1 1 web-post-bl)
    ; front wall
-   (key-wall-brace 4 cornerrow 0 -1 web-post-bl 4 cornerrow 0 -1 web-post-br)
+  ;  (key-wall-brace 4 cornerrow 0 -1 web-post-bl 4 cornerrow 0 -1 web-post-br)
+  (for [x (range 4 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl x cornerrow 0 -1 web-post-br))
+  (for [x (range 5 ncols)] (key-wall-brace x cornerrow 0 -1 web-post-bl (dec x) cornerrow 0 -1 web-post-br))
       (wall-brace thumb-0-2x 0 -1 web-post-br (partial key-place 4 cornerrow) 0 -1 web-post-bl)
 
    ; thumb walls
@@ -573,15 +575,15 @@
   ;  (wall-brace thumb-3-1x-top      0  1 web-post-tl thumb-3-1x-top      0  1 web-post-tr)
   ;  (wall-brace thumb-3-1x-top      0  1 web-post-tr thumb-2-1x-top      0  1 web-post-tl)
   ;  (wall-brace thumb-2-1x-top      0  1 web-post-tl thumb-2-1x-top      -1  1 web-post-tr)
-   (wall-brace thumb-2-1x-top -1 0 web-post-tl thumb-2-1x-top -1 0 web-post-bl)
-   (wall-brace thumb-2-1x-top -1 1 web-post-tr thumb-2-1x-top 0 1 web-post-tl)
+  ;  (wall-brace thumb-2-1x-top -1 0 web-post-tl thumb-2-1x-top -1 0 web-post-bl)
+  ;  (wall-brace thumb-2-1x-top -1 1 web-post-tr thumb-2-1x-top 0 1 web-post-tl)
    (wall-brace thumb-0-2x          0 -1 web-post-bl thumb-0-2x          0 -1 web-post-br)
 
    ; thumb corners
   ;  (wall-brace thumb-3-1x-bottom  -1  0 web-post-bl thumb-3-1x-bottom  0 -1 web-post-bl)
   ;  (wall-brace thumb-3-1x-top -1 0 web-post-tl thumb-3-1x-top 0 1 web-post-tl)
    
-   (wall-brace thumb-2-1x-top -1 0 web-post-tl thumb-2-1x-top 0 1 web-post-tl)
+  ;  (wall-brace thumb-2-1x-top -1 0 web-post-tl thumb-2-1x-top 0 1 web-post-tl)
    (wall-brace (partial key-place 0 0) 0 1 web-post-tl (partial key-place 0 0) -1 0 web-post-tl)
     ))
 
@@ -595,7 +597,7 @@
     (->>
        (binding [*fn* 50] (cylinder 1.75 20)) ; 5mm trrs jack
       (rotate (deg2rad  90) [1 0 0])))
-(def usb-holder-cube   (cube 11 20.8 10))
+(def usb-holder-cube   (cube 11 20.8 9))
 
 (def usb-holder-space  (translate (map + usb-holder-position [0 (* -1 wall-thickness) 1]) usb-holder-cube))
 (def usb-holder-screw-space (translate (map + usb-holder-screw-hole-left-position [0 (* -1 wall-thickness) 1]) usb-holder-screw-hole))
@@ -618,7 +620,7 @@
 ;    pro-micro-space))
 
 (def trrs-holder-ref (key-position 0 0 (map - (wall-locate2  0  -1) [0 (/ mount-height 2) 0])))
-(def trrs-holder-position (map + [-21.7 -21 4.5] [(first trrs-holder-ref) (second trrs-holder-ref) 3]))
+(def trrs-holder-position (map + [-18.5 -43 4.5] [(first trrs-holder-ref) (second trrs-holder-ref) 3]))
 (def trrs-holder-hole-size
     (->>
        (binding [*fn* 100] (cylinder 4 10)) 
@@ -787,10 +789,14 @@
       (write-scad
        (cut
         (translate [0 0 -0.1]
-                   (difference (union case-walls
-                                      pinky-walls
-                                      screw-insert-outers)
-                               (translate [0 0 -10] screw-insert-screw-holes))))))
+                   (difference 
+                   
+                   (union case-walls
+                        ; pinky-walls
+                        )
+                              )))
+      
+                              ))
 
 ; (spit "things/test.scad"
 ;       (write-scad

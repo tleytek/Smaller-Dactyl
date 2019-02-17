@@ -12,48 +12,89 @@ extern keymap_config_t keymap_config;
 
 
 
+
 // Fillers to make layering more clear
 
 #define ____ KC_TRNS
 
-#define SFT_ESC  SFT_T(KC_ESC)
-#define CTL_BSPC CTL_T(KC_BSPC)
-#define ALT_SPC  ALT_T(KC_SPC)
-#define SFT_ENT  SFT_T(KC_ENT)
+//Always start your new keys with KC_
+#define KC_SFT_Z  SFT_T(KC_Z)
 
-#define KC_ML KC_MS_LEFT
-#define KC_MR KC_MS_RIGHT
-#define KC_MU KC_MS_UP
-#define KC_MD KC_MS_DOWN
-#define KC_MB1 KC_MS_BTN1
-#define KC_MB2 KC_MS_BTN1
-
-#define RAISE MO(_RAISE)
-#define LOWER MO(_LOWER)
+#define KC_NUMDEL LT(NUM, KC_DEL)
+#define KC_ESCNAV LT(NAV, KC_ESC)
+#define KC_NUMENT LT(NUM, KC_ENT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-[QWERTY] = LAYOUT( \
+[QWERTY] = LAYOUT_kc( \
 //  ┌────────┬────────┬────────┬────────┬────────┐                   ┌────────┬────────┬────────┬────────┬────────┐
-       KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,                      KC_Y  ,  KC_U ,  KC_I  ,  KC_O  ,  KC_P  , 
+         Q   ,    W   ,    E   ,    R   ,    T   ,                        Y   ,    U   ,    I   ,    O   ,    P   ,
 //  ├────────┼────────┼────────┼────────┼────────┤                   ├────────┼────────┼────────┼────────┼────────┤
-       KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,                      KC_H  ,  KC_J  ,  KC_K  ,  KC_L  , KC_SCLN, 
+         A   ,    S   ,    D   ,    F   ,    G   ,                        H   ,    J   ,    K   ,    L   ,  SCLN  ,
 //  ├────────┼────────┼────────┼────────┼────────┼────────┐ ┌────────┼────────┼────────┼────────┼────────┼────────┤
-       KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,KC_LCTL ,  KC_LALT ,  KC_N  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH,
+       SFT_Z ,    X   ,    C   ,    V   ,    B   , ESCNAV ,    SYM   ,    N   ,    M   ,  COMM  ,   DOT  ,  SLSH  ,
 //  └────────┴────────┴────────┼────────┼────────┼────────┤ └────────┴────────┴────────┴────────┴────────┴────────┘
-                                KC_LGUI , KC_SPC , KC_DEL ,   KC_ENT ,KC_BSPC , KC_LALT
+                                  LCTL  ,   SPC  , NUMDEL ,   NUMENT ,  BSPC  ,  LALT
 //                             └────────┴────────┴────────┘ └────────┴────────┴────────┘
 ),
 
-[COLEMAK] = LAYOUT( \
+[COLEMAK] = LAYOUT_kc( \
 //  ┌────────┬────────┬────────┬────────┬────────┐                   ┌────────┬────────┬────────┬────────┬────────┐
-       KC_Q  ,  KC_W  ,  KC_F  ,  KC_P  ,  KC_G  ,                      KC_J  ,  KC_L  ,  KC_U  ,  KC_Y  ,KC_SCLN ,
+         Q   ,    W   ,    F   ,    P   ,    G   ,                        J   ,    L   ,    U   ,    Y   ,  SCLN  ,
 //  ├────────┼────────┼────────┼────────┼────────┤                   ├────────┼────────┼────────┼────────┼────────┤
-       KC_A  ,  KC_R  ,  KC_S  ,  KC_T  ,  KC_D  ,                      KC_H  ,  KC_N  ,  KC_E  ,  KC_I  , KC_O,
+         A   ,    R   ,    S   ,    T   ,    D   ,                        H   ,    N   ,    E   ,    I   ,    O   ,
 //  ├────────┼────────┼────────┼────────┼────────┼────────┐ ┌────────┼────────┼────────┼────────┼────────┼────────┤
-       KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  ,KC_LCTL ,  KC_LALT ,  KC_K  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH,
+         Z   ,    X   ,    C   ,    V   ,    B   , ESCNAV ,    SYM   ,    K   ,    M   ,  COMM  ,   DOT  ,  SLSH  ,
 //  └────────┴────────┴────────┼────────┼────────┼────────┤ └────────┴────────┴────────┴────────┴────────┴────────┘
-                                KC_LGUI , KC_SPC , KC_DEL ,   KC_ENT ,KC_BSPC , KC_LALT
+                                  LCTL  ,   SPC  , NUMDEL ,   NUMENT ,  BSPC  ,  LALT
+//                             └────────┴────────┴────────┘ └────────┴────────┴────────┘
+),
+
+[NAV] = LAYOUT_kc( \
+//  ┌────────┬────────┬────────┬────────┬────────┐                   ┌────────┬────────┬────────┬────────┬────────┐
+       ENT   ,  STAB  ,  TAB   ,  ESC   ,  DEL   ,                      STAB  ,  PGUP  ,   UP   ,  PGDN  ,  LGUI  ,
+//  ├────────┼────────┼────────┼────────┼────────┤                   ├────────┼────────┼────────┼────────┼────────┤
+       LCTL  ,  LGUI  ,  LSHFT ,  LALT  ,  BSPC  ,                      BSPS  ,  LEFT  ,  DOWN  ,  RGHT  ,  ENT   ,
+//  ├────────┼────────┼────────┼────────┼────────┼────────┐ ┌────────┼────────┼────────┼────────┼────────┼────────┤
+       UNDO  ,  CUT   ,  COPY  ,  PASTE , SELALL , ESCNAV ,    SYM   ,  TAB   ,  HOME  ,  DEL   ,  END    ,  REDO  ,
+//  └────────┴────────┴────────┼────────┼────────┼────────┤ └────────┴────────┴────────┴────────┴────────┴────────┘
+                                  LCTL  ,   SPC  , NUMDEL ,   NUMENT ,  BSPC  ,  LALT
+//                             └────────┴────────┴────────┘ └────────┴────────┴────────┘
+),
+
+[NUM] = LAYOUT_kc( \
+//  ┌────────┬────────┬────────┬────────┬────────┐                   ┌────────┬────────┬────────┬────────┬────────┐
+       EXCL  ,  STAB  ,  TAB   ,  EQL   ,  DEL   ,                      MINS  ,    7   ,    8   ,    9   ,  ASTR   ,
+//  ├────────┼────────┼────────┼────────┼────────┤                   ├────────┼────────┼────────┼────────┼────────┤
+       LCTL  ,  LGUI  ,  LSHFT ,  LALT  ,  AMP   ,                      BSPS  ,    4   ,    5   ,    6   ,  ENT   ,
+//  ├────────┼────────┼────────┼────────┼────────┼────────┐ ┌────────┼────────┼────────┼────────┼────────┼────────┤
+       LPRN  ,  LT    ,  PERC  ,  GT    ,  RPRN  , ESCNAV ,    SYM   ,  PLUS  ,    1   ,    2   ,    3   ,  SLSH  ,
+//  └────────┴────────┴────────┼────────┼────────┼────────┤ └────────┴────────┴────────┴────────┴────────┴────────┘
+                                  LCTL  ,   SPC  , NUMDEL ,   NUMENT ,  BSPC  ,  LALT
+//                             └────────┴────────┴────────┘ └────────┴────────┴────────┘
+),
+
+[SYM] = LAYOUT_kc( \
+//  ┌────────┬────────┬────────┬────────┬────────┐                   ┌────────┬────────┬────────┬────────┬────────┐
+       SCLN  ,  STAB  ,  DQT   ,  PLUS  ,  PIPE  ,                      BSLS  ,  RCBR  ,  RPRN  ,  RBRC  ,  GT    ,
+//  ├────────┼────────┼────────┼────────┼────────┤                   ├────────┼────────┼────────┼────────┼────────┤
+       COLN  ,  UNDS  ,  QUOT  ,  EQL   ,  AMP   ,                      SLSH  ,  LCBR  ,  LPRN  ,  LBRC  ,  LT    ,
+//  ├────────┼────────┼────────┼────────┼────────┼────────┐ ┌────────┼────────┼────────┼────────┼────────┼────────┤
+       EXLM  ,  QUES  ,   AT   ,  DLR   ,  ASTR  , ESCNAV ,    SYM   ,  HASH  ,  CIRC  ,  PERC  ,  TILD  ,  GRV   ,
+//  └────────┴────────┴────────┼────────┼────────┼────────┤ └────────┴────────┴────────┴────────┴────────┴────────┘
+                                  LCTL  ,   SPC  , NUMDEL ,   NUMENT ,  BSPC  ,  LALT
+//                             └────────┴────────┴────────┘ └────────┴────────┴────────┘
+),
+
+[FUNC] = LAYOUT_kc( \
+//  ┌────────┬────────┬────────┬────────┬────────┐                   ┌────────┬────────┬────────┬────────┬────────┐
+       LOCK  ,  SIZE  ,  CAPS  ,  MOVE  ,  VOLU  ,                     SCRUP  ,   F7   ,   F8   ,  RBRC  ,  GTN   ,
+//  ├────────┼────────┼────────┼────────┼────────┤                   ├────────┼────────┼────────┼────────┼────────┤
+       LCTL  ,  LGUI  ,  LSHFT ,  LALT  ,  MUTE  ,                      INS   ,   F4   ,   F5   ,  LBRC  ,  LTN   ,
+//  ├────────┼────────┼────────┼────────┼────────┼────────┐ ┌────────┼────────┼────────┼────────┼────────┼────────┤
+       LEFT  ,  DOWN  ,   UP   ,  RGHT  ,  VOLD  , ESCNAV ,    SYM   , SCRDN  ,   F1   ,   F2   ,   F3   ,  GRV   ,
+//  └────────┴────────┴────────┼────────┼────────┼────────┤ └────────┴────────┴────────┴────────┴────────┴────────┘
+                                  LCTL  ,   SPC  , NUMDEL ,   NUMENT ,  BSPC  ,  LALT
 //                             └────────┴────────┴────────┘ └────────┴────────┴────────┘
 )
 };
