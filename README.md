@@ -4,7 +4,7 @@ This is a fork of the [Dactyl-Manuform-Mini](https://github.com/l4u/dactyl-manuf
 
 I want to give credit to where it is due but it became tricky when [l4u](https://github.com/l4u) created a copy without forking, not a fault of his or anyone's, I did this myself, it just made the task of crediting original authored code through githubs fork system a bit tricky.
 
-![Dactyl variant](guide/Mint-dactyl.PNG)
+![Dactyl variant](/Case-Files/Smaller_Dactyl_Image.jpg)
 
 ## Info/The Why
 
