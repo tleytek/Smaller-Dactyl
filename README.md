@@ -2,8 +2,6 @@
 
 This is a fork of the [Dactyl-Manuform-Mini](https://github.com/l4u/dactyl-manuform-mini-keyboard). The Dactyl-ManuForm-Mini is a fork of the [Dactyl-Manuform](https://github.com/tshort/dactyl-keyboard). The Dactyl-Manuform is a fork of the [Dactyl](https://github.com/adereth/dactyl-keyboard) with the thumb cluster from [ManuForm](https://github.com/jeffgran/ManuForm).
 
-I want to give credit to where it is due but it became tricky when [l4u](https://github.com/l4u) created a copy without forking, not a fault of his or anyone's, I did this myself, it just made the task of crediting original authored code through githubs fork system a bit tricky.
-
 ![Dactyl variant](/Case-Files/Smaller_Dactyl_Image.jpg)
 
 ## Info/The Why
